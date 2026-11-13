@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+*.tmp
+
+# 本地操作日志：仅维护者本地留存，不入库
+log.md
+
+# 编辑器本地配置（Obsidian 工作区状态，不入库）
+.obsidian/

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Project>
+  <Targets>
+    <Target>
+      <TargetName>Demo</TargetName>
+      <TargetOption>
+        <TargetCommonOption>
+          <OutputDirectory>.\Objects\</OutputDirectory>
+          <OutputName>demo</OutputName>
+        </TargetCommonOption>
+      </TargetOption>
+    </Target>
+    <Target>
+      <TargetName>Other</TargetName>
+      <TargetOption>
+        <TargetCommonOption>
+          <OutputDirectory>.\OtherObjects\</OutputDirectory>
+          <OutputName>other</OutputName>
+        </TargetCommonOption>
+      </TargetOption>
+    </Target>
+  </Targets>
+</Project>

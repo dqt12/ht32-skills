@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "project": {
+    "chip": "HT32F52352",
+    "uvprojx": "project/MDK_ARMv5/demo.uvprojx",
+    "target": "Demo"
+  },
+  "debugger": {
+    "backend": "keil",
+    "probe_serial": null,
+    "interface": "swd",
+    "speed_khz": 1000
+  }
+}

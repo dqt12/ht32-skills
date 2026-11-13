@@ -1,0 +1,66 @@
+# 基于 Holtek 标准风格定制 Ver.20260825
+BasedOnStyle: LLVM
+
+# 缩进与制表符
+UseTab: Never
+IndentWidth: 2
+TabWidth: 4
+ContinuationIndentWidth: 4
+
+# 花括号：严格的 Allman 风格（左括号独占一行）
+BreakBeforeBraces: Allman
+
+# extern "C" / #if 包裹的声明不额外缩进
+IndentExternBlock: NoIndent
+
+# 预处理指令：#if/#endif 与块内 #define 整体跟随缩进
+IndentPPDirectives: BeforeHash
+
+# 列宽限制（厂商库中存在部分长宏，120 是兼顾可读性与原有风格的折中）
+ColumnLimit: 120
+
+# 指针/引用紧贴变量名
+PointerAlignment: Right
+
+# 控制语句关键字后加空格，函数定义/调用不加空格
+SpaceBeforeParens: ControlStatements
+
+# C 风格强制转换后不加空格
+SpaceAfterCStyleCast: false
+
+# 连续赋值对齐
+AlignConsecutiveAssignments:
+  Enabled: true
+  AcrossEmptyLines: false
+  AcrossComments: false
+
+# 连续声明不对齐（结构体成员/枚举不右对齐）
+AlignConsecutiveDeclarations:
+  Enabled: false
+
+# 连续宏定义对齐（跨空行与注释，全局对齐到最长宏名）
+AlignConsecutiveMacros:
+  Enabled: true
+  AcrossEmptyLines: true
+  AcrossComments: true
+
+# 不重新格式化已有注释（保留厂商库特殊的填充注释与章节分割线）
+ReflowComments: false
+
+# 不自动排序 include（厂商库 include 顺序通常有依赖）
+SortIncludes: false
+
+# 不允许将短语句块压缩到单行（保持 Allman 的严格换行）
+AllowShortBlocksOnASingleLine: Never
+
+# 不允许将短函数定义压缩到单行（仅宏定义保持单行，函数保持 Allman 换行）
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+
+# 保留原有的空行习惯
+MaxEmptyLinesToKeep: 2
+
+# 函数参数与调用参数默认保持打包在一行（嵌入式 API 通常短参数列表）
+BinPackParameters: true
+BinPackArguments: true

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Project>
+  <Targets>
+    <Target>
+      <TargetName>HT32F52352</TargetName>
+      <TargetOption>
+        <TargetCommonOption>
+          <Device>HT32F52352</Device>
+        </TargetCommonOption>
+        <TargetArmAds>
+          <ArmAdsMisc>
+            <DebugOpt>
+              <uSim>0</uSim>
+              <uTrg>1</uTrg>
+              <Driver>BIN\CMSIS_AGDI.dll</Driver>
+            </DebugOpt>
+          </ArmAdsMisc>
+        </TargetArmAds>
+        <Utilities>
+          <Flash1>
+            <UseTargetDll>1</UseTargetDll>
+            <UseExternalTool>0</UseExternalTool>
+          </Flash1>
+          <Flash2>BIN/CMSIS_AGDI.dll</Flash2>
+        </Utilities>
+      </TargetOption>
+    </Target>
+  </Targets>
+</Project>
