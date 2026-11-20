@@ -9,7 +9,7 @@
 1. `get_wiki_version` 1 次——不通则阻断（选型结论全部依赖 wiki 检索）
 2. `get_code_version` 1 次——不通只记 warning，不阻断（选型不依赖 code MCP）
 3. `report_skill_version(version=<本 Skill frontmatter 版本>)`——会话级用量打标；
-   wiki MCP 低于 0.8.3 无此工具时记 warning，不阻断
+   无此工具时记 warning，不阻断
 4. `check_skill_update(current=<同版本>)`——顺带打标 + 更新检查；失败记「未获取」，不阻断
 
 不跑本地工具链探测、不跑 `ht32.py version`、不读 `env-check.md` 全文。

@@ -1,7 +1,7 @@
 # ht32-code MCP 工具速查
 
 > 本文件是 `ht32` 主 Skill 的参考资料（不是工作流，无 frontmatter）：把 ht32-code MCP 的
-> 13 个工具浓缩成一页，减少每次调用前反复读 descriptor 的开销。**权威定义以 MCP server
+> 14 个工具浓缩成一页，减少每次调用前反复读 descriptor 的开销。**权威定义以 MCP server
 > 实际返回的 descriptor 为准**；本页与 descriptor 冲突时以 descriptor 为准，并按
 > skill_defect 反馈（code MCP `submit_feedback`）。
 >
@@ -12,10 +12,11 @@
 | 工具 | 一句话用途 | 关键参数 | 返回要点 |
 |---|---|---|---|
 | `get_code_version` | 知识库版本与规模统计（写 HT32_PROJECT.md 第 7 节用） | 无 | 知识库版本、MCP server 版本、固件库覆盖、模板状态、库模块/例程/知识页/raw 统计、索引构建时间、组件目录状态 |
-| `list_libraries` | 枚举函数库模块与覆盖系列（不知道模块官方名前先查它） | `series`（f5/l5/F493x5/M0+/M3/M4）；`module`（模块名子串，如 gpio/usart）；`compact`（默认 false；true 时每包一行只给模块名清单，省 token） | 默认返回每模块的驱动源码/头文件 raw 路径、变体数、例程数、知识页路径；`compact=true` 只给模块名（要路径再用 `module=` 或 `compact=false`）；`module` 查不到时回退列全部模块名 |
-| `find_example` | 按外设/系列/芯片找官方例程 | `peripheral`（必填，如 gpio/usart/adc）；`series`（f5/l5/F493x5/M0+/M3/M4）；`chip`；`limit=10` | 例程路径与简介；`chip` 先对照模板 devices.json 确认受支持再按系列过滤 |
-| `get_file` | 读 raw/ 原档真实内容（只读） | `path`（raw/ 相对路径，可省略 raw/ 前缀）；`max_length=50000`（-1 取全文） | 文件文本；拒绝绝对路径与 `..`；超长按 max_length 截断 |
-| `search_code_knowledge` | 检索函数库知识页 + 系列差异对比页 | `query`（如 "GPIO 输出初始化"/"子系列差异"）；`limit=5` | 按相关性排序的结果：标题、路径、片段；查不到时给换词建议 |
+| `list_libraries` | 枚举函数库模块与覆盖系列（不知道模块官方名前先查它） | `series`（f5/l5/F493x5/M0+/M3/M4）；`module`（模块名子串，如 gpio/usart）；`compact`（默认 false；true 时每包一行只给模块名清单，省 token）；`legacy`（默认 false；true 时把 `raw/legacy/` 历史归档包一并列出并标 `[历史版本]`） | 默认返回每模块的驱动源码/头文件 raw 路径、变体数、例程数、知识页路径；`compact=true` 只给模块名（要路径再用 `module=` 或 `compact=false`）；`module` 查不到时回退列全部模块名；有历史归档包时末尾给一行摘要（现行库不含归档包） |
+| `find_example` | 按外设/系列/芯片找官方例程 | `peripheral`（必填，如 gpio/usart/adc）；`series`（f5/l5/F493x5/M0+/M3/M4）；`chip`；`limit=10`；`legacy`（默认 false；true 时并入 `raw/legacy/` 归档例程并标 `[历史版本]`） | 例程路径与简介；`chip` 先对照模板 devices.json 确认受支持再按系列过滤 |
+| `get_file` | 读 raw/ 原档真实内容（只读） | `path`（raw/ 相对路径，可省略 raw/ 前缀）；`max_length=50000`（-1 取全文） | 文件文本；拒绝绝对路径与 `..`；超长按 max_length 截断；**路径属于已升级归档的旧包时，直接返回 `raw/legacy/<包名>/...` 归档新路径 + 版本差异页指引**（旧工程按提示改路径即可，不要猜新库同名文件） |
+| `search_code_knowledge` | 检索函数库知识页 + 系列差异对比页 | `query`（如 "GPIO 输出初始化"/"子系列差异"/"固件库 版本 差异"）；`limit=5` | 按相关性排序的结果：标题、路径、片段；查不到时给换词建议 |
+| `get_knowledge_page` | 读知识页全文（`entities/`、`comparisons/`） | `path`（仓库相对路径，如 `entities/libraries/gpio.md`）；`max_length=50000`（-1 取全文） | 页面全文；页面不存在时给相近页候选 |
 | `get_project_manifest` | 工程模板清单（建工程第 4 步） | 无 | 各模板结构、默认芯片、支持型号数、路径 |
 | `export_project_bundle` | 按 config_id 导出自包含可编译 Keil 工程（可并入私有组件） | `config_id`（必填，`<device>.<board>.<compiler>.<clock>.<retarget>`，如 `ht32f50241.ht32f50241-sk.ac5.hsi-safe.retarget`）；也接受 `device`+`board`（多板型必须给 board）；`out_dir`（本地模式，须为空）；`project_name`（落到工程名/Target/产物名）；`components`（字符串数组，元素 `"<component_id>@<tag>"`，零组件不传）。旧 `chip` 参数仅只读兼容，会带弃用警告，不要再使用 | 云端模式：带 TTL 的 zip URL + SHA256 + 大小；本地模式：物化目录报告。工程文件按工程名重命名，模板自用文件不外发；选了组件时报告列出 `id@tag`、commit、文件数与 tree SHA256 |
 | `list_components` | 列出已登记的私有组件（全部对 MCP 用户可见） | `query`（关键词，也接受型号）；`series`（f5/l5/F493x5/`HT32F50241`，支持**族前缀**：`HT32F50241` 命中登记的 `HT32F5`，同族未枚举型号也能查到；也支持通配符 `HT32F49*`；`*`=已登记为全部型号）；`purpose`（bsp/middleware/driver）；`limit=50` | 组件 ID/名称、用途、**能力摘要（provides 前 3 项）**、适用系列（非白名单）、默认 tag、可用 tag + commit 摘要；"已验证型号"折叠在详情；不返回 Git 地址 |
@@ -33,6 +34,7 @@
 | 不知道库模块官方名 / 有哪些模块 | `list_libraries(compact=true)`（要路径再 `module="<模块名>"`） |
 | 某外设怎么初始化、API 易错点 | `search_code_knowledge` |
 | 找官方例程照抄结构 | `find_example`（要原文再 `get_file`） |
+| 工程固件库版本旧于现行库 / 编译报"未定义 API" | `search_code_knowledge("固件库 版本 差异")` 查 `comparisons/fwlib-version-history.md`，再按 `raw/legacy/` 取证 |
 | 从零建工程 | `get_project_manifest` → `list_components`（**必做一次**，结果可为 0 个但须留评估结论）→ `export_project_bundle` |
 | 需要 BSP / 中间件 / 私有驱动包 | `list_components` → `get_component_info` → `search_component_code` / `read_component_file` |
 | 判断某组件能不能用 / 能不能与现有实现共存 | `get_component_info`（看 `provides` / `not_provides` / `composability` / `docs`，再 `read_component_file` 读文档） |

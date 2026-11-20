@@ -38,7 +38,10 @@
    - **必填：芯片型号**。当前会话已有 wiki 核对结果则直接使用；否则调 wiki-mcp
      `get_model` + `get_chip_info` 核对，并把页面来源写入 `{{wiki_source}}`
    - 工程名 / 项目目标 / 外设需求：来自用户或主 skill 传入；缺失时询问
-   - 固件库版本 / 例程路径：有 code-mcp 时用 `get_code_version` / `find_example` 补充；无则填"待补"
+   - 固件库版本：写**工程实际使用的版本**（取自工程内库目录名 / 导出工程 `manifest/project-lock.json` / 用户说明），
+     并用 code-mcp `get_code_version` 取**云端现行版本**；两者不一致时在第 7 节写明差异，
+     并注明"旧工程取证：code MCP 版本差异页（`search_code_knowledge("固件库 版本 差异")`）+ 归档路径取档"。
+     例程路径用 `find_example`（旧库工程加 `legacy=True`）；无 code-mcp 时填"待补"
    - 私有组件 / 组件选用结论（第 4 节）：来自建工程第 4 步的能力评估结果——
      `{{components}}` 写 `<id>@<tag>`（可附 commit）与落点，零组件写「无」；
      `{{component_decision}}` 写选/不选 + 理由，选用未验证型号时标注「该型号未在组件验证样本内」

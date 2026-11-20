@@ -273,11 +273,18 @@ class SkillContractsTest(unittest.TestCase):
         tools = (ROOT / "skills" / MAIN_SKILL / "references" / "mcp-tools.md").read_text(
             encoding="utf-8-sig")
         for tool in ("list_components", "get_component_info", "search_component_code",
-                     "read_component_file"):
+                     "read_component_file", "get_knowledge_page", "get_file"):
             with self.subTest(tool=tool):
                 self.assertIn(f"`{tool}`", tools)
         self.assertIn('"<component_id>@<tag>"', tools)
-        self.assertIn("13 个工具", tools)
+        self.assertIn("14 个工具", tools)
+        # 旧库归档口径：工具页必须写明 legacy 参数与归档提示，否则旧工程会误用新库路径
+        self.assertIn("legacy", tools)
+        self.assertIn("raw/legacy/", tools)
+        # AGENTS.md 的「深入参考」表同样写工具数，曾漂移两次（13 vs 14），一并锁住
+        agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8-sig")
+        self.assertIn("14 个工具", agents)
+        self.assertNotIn("13 个工具", agents)
         self.assertIn("components-lock.json", tools)
 
         for phrase in ("list_components", "components-lock.json", "不回退 branch/HEAD"):

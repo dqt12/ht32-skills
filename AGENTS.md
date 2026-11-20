@@ -87,7 +87,7 @@ ht32-skills/
 4. **模板版本标记不可删** —— `<!-- ht32-project:template-version:N -->` 是 `validate_template.ps1` 的正则锚点，删标记校验直接失败
 5. **MCP-only 取证** —— 规格 / 引脚 / 寄存器只来自 wiki MCP，库 API / 例程 / 模板只来自 code MCP；MCP 答不出 → 记知识缺口 + `submit_feedback`，**不得绕过 MCP、不得凭记忆编造**
    - 用户态唯一合法取证路径是 MCP 工具（终端机器上没有两个知识库的仓库副本）
-   - 本 Skill 自身缺陷走 code MCP `submit_feedback(issue_type="skill_defect")`，`skill_version` 传实测版本（结构化字段，0.4.3+），`details` 写现象 + 日志路径
+   - 本 Skill 自身缺陷走 code MCP `submit_feedback(issue_type="skill_defect")`，`skill_version` 传实测版本（结构化字段），`details` 写现象 + 日志路径
 6. **跨仓库不引用路径** —— 见上文「三仓库分工」
 7. **runtime 只依赖标准库** —— 引入第三方依赖即破坏"开箱可用"
 8. **项目数据边界** —— 用户工程 `.ht32-skills/` 只允许 `config.json`；state / cache / logs 写全局数据目录；**不得在用户工程内开状态目录**，也不得把构建 / 烧录 / 调试委派给宿主其他 Skill。串口观测例外：用户已有串口能力时优先用，没有才用内建 `serial`。全局目录不可写时**降级不失败**（只给 warning）；需要落盘用 `HT32_SKILLS_HOME` 重定向
@@ -182,7 +182,7 @@ python scripts/analyze_feedback.py <反馈日志根目录> [--days 7] [--service
 | 对外说明、安装步骤、宿主与工具链支持 | [README.md](README.md) |
 | 主入口路由表与后端决策 | `skills/ht32/SKILL.md` |
 | 单条流程细节 | `skills/ht32/workflows/*.md` |
-| code MCP 13 个工具速查 | `skills/ht32/references/mcp-tools.md` |
+| code MCP 14 个工具速查 | `skills/ht32/references/mcp-tools.md` |
 | Git 初始化 / 提交口径 | `skills/ht32/references/git.md` |
 | runtime CLI 与结果契约 | `python runtime/ht32.py --help` + `runtime/ht32_runtime/cli.py` |
 | 模板结构契约 | `templates/` 两份 + `scripts/validate_template.ps1` |

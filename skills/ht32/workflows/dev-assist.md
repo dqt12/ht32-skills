@@ -55,6 +55,10 @@
 | 已集成私有组件源码 | `search_component_code` / `read_component_file`（组件 ID + 锁定清单 tag） |
 | 发现可用新组件 | `list_components` → `get_component_info`（必要时询问用户是否加入） |
 
+- **版本对齐（取证第一步，必做）**：读 `HT32_PROJECT.md` 第 7 节的「固件库版本」，再用 `get_code_version` 取云端现行库版本。
+  - 两者一致 → 正常取证
+  - 工程版本**旧于**现行库 → 先 `search_code_knowledge("固件库 版本 差异")` 读版本差异页，确认要用到的 API 是否被**删除 / 改名 / 签名变更**；旧版原码用 `get_file` 取归档路径（直接引用旧路径会被自动提示归档新位置；`find_example(..., legacy=True)` 可列归档例程）
+  - **禁止**把现行库的同名文件当成旧工程可用代码（旧路径取档会被自动提示归档新路径）；汇报中说明差异并提示可升级
 - 组件相关：先读 `manifest/components-lock.json`，按 `component_id` + `tag` 调 `search_component_code` / `read_component_file`；MCP 无法解析锁定 tag → 按知识缺口处理并告知用户，**不自行改用 branch/HEAD 或本机仓库副本**
 - 组件未集成但用户要用其 API → 用户确认后用 `export_project_bundle(components=[...])` 重建工程，**不手工拷贝组件源码进工程**
 - 检索无果：换关键词重试一轮；用 `get_file` 直读库头文件确认 API 签名；仍无结果 → **记知识缺口**：code MCP `submit_feedback` 上报，并在 HT32_PROJECT.md 标「待核对（MCP 未覆盖）」；**不凭记忆写 API**

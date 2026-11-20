@@ -1,6 +1,6 @@
 ---
 name: ht32
-version: 1.0.0
+version: 1.1.0
 description: >-
   HT32 单一主入口：芯片选型咨询、从零新建工程、已有工程续开发（写码/改码/修 bug）、
   同系列型号迁移（如 HT32F50230 → HT32F50241）、环境检测、HT32_PROJECT.md 生成与更新、
