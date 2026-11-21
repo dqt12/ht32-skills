@@ -285,6 +285,10 @@ class SkillContractsTest(unittest.TestCase):
         agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8-sig")
         self.assertIn("14 个工具", agents)
         self.assertNotIn("13 个工具", agents)
+        # README 安装验证步骤同样写工具数（同类漂移第 4 例，粗体标记曾绕过人工 grep），一并锁住
+        readme = (ROOT / "README.md").read_text(encoding="utf-8-sig")
+        self.assertIn("应有 **14 个**", readme)
+        self.assertNotIn("应有 **13 个**", readme)
         self.assertIn("components-lock.json", tools)
 
         for phrase in ("list_components", "components-lock.json", "不回退 branch/HEAD"):

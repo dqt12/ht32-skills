@@ -47,7 +47,10 @@
 | 外设与通道数 | 外设缺失 → 阻断该功能；通道/实例变化 → 改初始化与引脚配置 |
 
 - 引脚与复用功能变化：走 wiki 引脚复用（pinmux）检索（`search_datasheets("<型号> pinmux")`；
-  未命中再 `search_knowledge("<型号> <引脚号>", include_datasheets=True)`）
+  未命中再 `search_knowledge("<型号> <引脚号>", include_datasheets=True)`：
+  该参数现追加**原档章节级**结果（「文档 › 章节 › 标题」定位），不再返回整页；
+  需要看引脚表上下文时 `list_datasheet_sections(series)` → `get_datasheet_section(series, "<章节>")`
+  取单章正文，**不拉整篇**）
 - 差异清单（含必需改动项与硬件影响）**先给用户确认**，**确认后才动工程文件**
 - MCP 答不出 → 记知识缺口：对应 MCP `submit_feedback` 上报，清单中标「待核对（MCP 未覆盖）」
 

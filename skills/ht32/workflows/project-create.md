@@ -38,8 +38,12 @@
 3. **引脚 / 复用功能类问题**：走 wiki MCP 的**引脚复用（pinmux）检索**，按序调用——
    ① `search_datasheets("<型号> pinmux")`：pinmux 行级数据在原档全文层（AF 族 54 型号已覆盖，
    F5 全子系列含 F50241 等）；
-   ② 未命中再 `search_knowledge("<型号> <引脚号>", include_datasheets=True)`；
-   ③ 仍无 → 按第 7 条记知识缺口。**wiki 没有独立 pinmux 工具**，只搜精炼页搜不到 ≠ 未覆盖
+   ② 未命中再 `search_knowledge("<型号> <引脚号>", include_datasheets=True)`：
+   该参数现追加**原档章节级**结果（「文档 › 章节 › 标题」定位），不再返回整页；
+   ③ 要看引脚表上下文：`list_datasheet_sections(series)` 找章节 → `get_datasheet_section(series, "<章节>")`
+   取单章正文（**不拉整篇**，避免截断与上下文浪费）；
+   ④ 仍无 → 按第 7 条记知识缺口。**wiki 没有「按引脚查 AF」的独立工具**，
+   `find_models_with_function` 只做功能→型号反查，不能替代按引脚查询；只搜精炼页搜不到 ≠ 未覆盖
    （覆盖范围随 wiki pinmux 索引进展更新，不写死"只有 F5"）
 4. **库 API / 例程 / 模板类问题**：走 code MCP（`search_code_knowledge` / `find_example` / `get_file`）
 5. 结论与来源（页面名）一并记录——它们要写入 HT32_PROJECT.md 第 2 节

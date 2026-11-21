@@ -36,8 +36,10 @@
 
 1. **selection 决策树**：`selection-5v-mcu`（5V 宽压）、`selection-bldc-motor`（电机/预驱）、`selection-usb-can`（USB/CAN）、`selection-touch`（触控）——命中即沿决策树走
 2. **系列页外设资源矩阵**：用 wiki MCP 检索候选系列的芯片规格页（20+ 字段矩阵）直接对参数（无需翻 datasheet 原档）
-3. 跨系列对比需求读 `ht32-m0p/m3/m4-series-overview` 与 `ht32-chip-registry`
-4. 特殊主题补充：BLE → `ht32-ble-soc`；低功耗 → `ht32l52xxx` 系列页 + `power-domains`；安全认证 → `ht32-safety-certification`
+3. **按功能反查型号**：用户以功能为导向（要有几路 UART/SPI/I2C/ADC/PWM 等）时，先 `find_models_with_function("<功能>")`
+   取具备该功能的型号与封装，再回第 2 条对矩阵；该工具是**功能→型号反查**，不替代型号→规格查询
+4. 跨系列对比需求读 `ht32-m0p/m3/m4-series-overview` 与 `ht32-chip-registry`
+5. 特殊主题补充：BLE → `ht32-ble-soc`；低功耗 → `ht32l52xxx` 系列页 + `power-domains`；安全认证 → `ht32-safety-certification`
 
 ### 第 3 步 · 输出对比与推荐
 

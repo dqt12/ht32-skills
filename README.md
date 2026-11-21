@@ -94,7 +94,7 @@ git clone https://github.com/dqt12/ht32-skills.git
 | `ht32-wiki` | `https://mcp.s621.work/ht32-wiki` |
 | `ht32-code` | `https://mcp.s621.work/ht32-code` |
 
-完成标志：列出你已加载的工具，`ht32-code` 应有 **13 个**；或直接调 `get_code_version`，返回版本号即接通。
+完成标志：列出你已加载的工具，`ht32-code` 应有 **14 个**；或直接调 `get_code_version`，返回版本号即接通。
 
 ### 4. 验证环境
 
